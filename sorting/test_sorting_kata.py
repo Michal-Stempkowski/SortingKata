@@ -33,5 +33,14 @@ class TestSortingKata(TestCase):
 
     def test_given_empty_list__should_return_empty_list(self):
         self.assert_sorted([], [])
+
+    def test_given_list__should_sort_it(self):
         self.assert_sorted([1, 2], [2, 1])
         self.assert_sorted([1, 2, 3, 4], [4, 3, 2, 1])
+
+    def test_given_big_list__should_sort_it_quickly(self):
+        big_list = list(range(10000, 0, -1))
+        big_list_sorted = copy(big_list)
+        big_list_sorted.reverse()
+
+        self.assert_sorted(big_list_sorted, big_list)
