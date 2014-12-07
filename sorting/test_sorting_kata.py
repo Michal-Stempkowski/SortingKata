@@ -1,3 +1,4 @@
+from copy import copy
 from unittest import TestCase
 
 
@@ -41,3 +42,9 @@ class TestSortingKata(TestCase):
         self.assert_sorted([1, 2], [2, 1])
         self.assert_sorted([0, 1, 2], [0, 2, 1])
         self.assert_sorted([0, 1, 2], [2, 1, 0])
+
+        big_list = list(range(1000, 0, -1))
+        big_list_sorted = copy(big_list)
+        big_list_sorted.reverse()
+
+        self.assert_sorted(big_list_sorted, big_list)
