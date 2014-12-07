@@ -8,11 +8,19 @@ def swap(some_list, left, right):
 
 
 def sort(unsorted):
-    if not unsorted or len(unsorted) < 2:
-        return unsorted
+    is_sort_required = unsorted and len(unsorted) > 1
 
-    if unsorted[0] > unsorted[1]:
-        swap(unsorted, 0, 1)
+    while is_sort_required:
+        last_element_index = len(unsorted) - 1
+        is_sort_required = False
+
+        for current in range(0, last_element_index):
+            next = current + 1
+
+            if unsorted[current] > unsorted[next]:
+                swap(unsorted, current, next)
+                is_sort_required = True
+
     return unsorted
 
 
@@ -21,10 +29,15 @@ class TestSortingKata(TestCase):
         pass
 
     def test_given_none__should_return_none(self):
-        self.assertEquals(None, sort(None))
+        self.assert_sorted(None, None)
 
     def test_given_empty_list__should_return_empty_list(self):
-        self.assertEquals([], sort([]))
+        self.assert_sorted([], [])
+
+    def assert_sorted(self, sorted, unsorted):
+        self.assertEquals(sorted, sort(unsorted))
 
     def test_given_unsorted_list__should_sort_it(self):
-        self.assertEquals([1, 2], sort([2, 1]))
+        self.assert_sorted([1, 2], [2, 1])
+        self.assert_sorted([0, 1, 2], [0, 2, 1])
+        self.assert_sorted([0, 1, 2], [2, 1, 0])
